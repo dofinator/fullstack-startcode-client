@@ -10,7 +10,7 @@ export default interface ILyndaFriend {
   id?: string
   firstName: string
   lastName: string
-  gender: Gender
-  age: number
+  password: string
   email: string
+  gender: Gender
 }

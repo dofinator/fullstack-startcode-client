@@ -29,7 +29,7 @@ export default function App() {
             <NavLink exact activeClassName="selected" to="/">Home</NavLink>
           </li>
           <li>
-            <NavLink exact activeClassName="selected" to="/allFriends">All Friends</NavLink>
+            <NavLink exact activeClassName="selected" to="/all">All Friends</NavLink>
           </li>
           <li>
             <NavLink exact activeClassName="selected" to="/findFriend">Find Friend</NavLink>
@@ -47,7 +47,7 @@ export default function App() {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route path="/allFriends">
+              <Route path="/all">
                 <AllFriends />
               </Route>
               <Route path="/findFriend">

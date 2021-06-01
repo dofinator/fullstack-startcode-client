@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ILyndaFriend, { Gender } from "../interfaces/interfaces"
+import { useQuery, gql } from "@apollo/client"
 
 type AddFriendProps = {
   initialFriend?: ILyndaFriend
@@ -8,8 +9,22 @@ type AddFriendProps = {
 interface IKeyableFriend extends ILyndaFriend {
   [key: string]: any
 }
+
+const ADD_FRIEND = gql`
+mutation createFriend($friend: ILyndaFriend){
+  createFriend(input: $friend) {
+    id
+    firstName
+    lastName
+    password
+    email
+    gender
+  }
+}
+`
+
 const AddFriend = ({ initialFriend }: AddFriendProps) => {
-   const EMPTY_FRIEND: ILyndaFriend = { firstName: "", lastName: "", gender: "OTHER", age: -1, email: "" }
+  const EMPTY_FRIEND: ILyndaFriend = { firstName: "", lastName: "", password: "", email: "", gender: "OTHER" }
   let newFriend = initialFriend ? initialFriend : { ...EMPTY_FRIEND }
 
   const [friend, setFriend] = useState({ ...newFriend })
@@ -41,6 +56,16 @@ const AddFriend = ({ initialFriend }: AddFriendProps) => {
       </label>
       <br />
       <label>
+        password <br />
+        <input type="text" id="password" value={friend.password} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        email <br />
+        <input type="text" id="email" value={friend.email} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
         Gender &nbsp;
           <select id="gender" value={friend.gender} onChange={handleChange}>
           <option value="MALE">Male</option>
@@ -49,10 +74,6 @@ const AddFriend = ({ initialFriend }: AddFriendProps) => {
         </select>
       </label>
       <br />
-      <label>
-        Age <br />
-        <input type="number" id="age" value={friend.age} onChange={handleChange} />
-      </label>
       <br /><br />
       <input type="submit" value="Submit" />
     </form>
