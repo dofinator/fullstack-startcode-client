@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
 import { useQuery, gql } from "@apollo/client"
 import ILyndaFriend from "../interfaces/interfaces"
 
@@ -8,14 +7,13 @@ interface IFriends {
 }
 
 export const ALL_FRIENDS = gql`
-query{
-  allFriends {
-    id
-    firstName
-    lastName
-    email
-  }
-}
+query{allFriends
+{
+  id
+  firstName
+  lastName
+  email
+}}
 
 `
 export default function All() {
@@ -26,6 +24,8 @@ export default function All() {
     }
   )
 
+  if(loading) return <p>Loading....</p>
+  if(error) return <p>{error.toString()}</p>
   return (
     <div>
       <table className="table">

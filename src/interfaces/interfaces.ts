@@ -1,10 +1,4 @@
-// export enum Gender {
-//   MALE,
-//   FEMALE,
-//   OTHER
-// }
 
-export type Gender = "MALE" | "FEMALE" | "OTHER"
 
 export default interface ILyndaFriend {
   id?: string
@@ -12,5 +6,4 @@ export default interface ILyndaFriend {
   lastName: string
   password: string
   email: string
-  gender: Gender
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ILyndaFriend, { Gender } from "../interfaces/interfaces"
-import { useQuery, gql } from "@apollo/client"
+import ILyndaFriend from "../interfaces/interfaces"
+import { useQuery, gql} from "@apollo/client"
 
 type AddFriendProps = {
   initialFriend?: ILyndaFriend
@@ -24,7 +24,7 @@ mutation createFriend($friend: ILyndaFriend){
 `
 
 const AddFriend = ({ initialFriend }: AddFriendProps) => {
-  const EMPTY_FRIEND: ILyndaFriend = { firstName: "", lastName: "", password: "", email: "", gender: "OTHER" }
+  const EMPTY_FRIEND: ILyndaFriend = { firstName: "", lastName: "", password: "", email: ""}
   let newFriend = initialFriend ? initialFriend : { ...EMPTY_FRIEND }
 
   const [friend, setFriend] = useState({ ...newFriend })
@@ -65,14 +65,6 @@ const AddFriend = ({ initialFriend }: AddFriendProps) => {
         <input type="text" id="email" value={friend.email} onChange={handleChange} />
       </label>
       <br />
-      <label>
-        Gender &nbsp;
-          <select id="gender" value={friend.gender} onChange={handleChange}>
-          <option value="MALE">Male</option>
-          <option value="FEMALE">Female</option>
-          <option value="OTHER">Other</option>
-        </select>
-      </label>
       <br />
       <br /><br />
       <input type="submit" value="Submit" />
