@@ -9,10 +9,9 @@ const GET_FRIEND = gql`
     getFriend(id:$id){
      id
      email
-     age
      firstName
      lastName
-     gender
+ 
    }
 }
 `
