@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ILyndaFriend from "../interfaces/interfaces"
-import { useQuery, gql} from "@apollo/client"
+import { useQuery, gql, useMutation } from "@apollo/client"
 
 type AddFriendProps = {
   initialFriend?: ILyndaFriend
@@ -11,21 +11,22 @@ interface IKeyableFriend extends ILyndaFriend {
 }
 
 const ADD_FRIEND = gql`
-mutation createFriend($friend: ILyndaFriend){
+mutation createFriend($friend: FriendInput){
   createFriend(input: $friend) {
     id
     firstName
     lastName
-    password
     email
-    gender
   }
 }
 `
 
 const AddFriend = ({ initialFriend }: AddFriendProps) => {
-  const EMPTY_FRIEND: ILyndaFriend = { firstName: "", lastName: "", password: "", email: ""}
+  const EMPTY_FRIEND: ILyndaFriend = { firstName: "", lastName: "", password: "", email: "" }
   let newFriend = initialFriend ? initialFriend : { ...EMPTY_FRIEND }
+  const [createFriend] = useMutation(
+    ADD_FRIEND
+  );
 
   const [friend, setFriend] = useState({ ...newFriend })
 
@@ -38,7 +39,7 @@ const AddFriend = ({ initialFriend }: AddFriendProps) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     alert(JSON.stringify(friend))
-    //Todo save friend on servers
+    createFriend({ variables: { friend } })
     setFriend({ ...EMPTY_FRIEND })
   }
 

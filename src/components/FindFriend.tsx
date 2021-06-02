@@ -4,39 +4,39 @@ import React, { useState } from "react";
 import { useLazyQuery, gql } from "@apollo/client"
 import ILyndaFriend from "../interfaces/interfaces"
 
-const GET_FRIEND = gql`
- query getFriend($id: ID) {
-    getFriend(id:$id){
+const GET_FRIEND_BY_EMAIL = gql`
+ query getFriend($input: String) {
+    getFriendByEmail(input:$input){
      id
      email
      firstName
      lastName
- 
    }
 }
 `
 
 export default function FindFriend() {
-  const [id, setId] = useState("")
-  const [] = useLazyQuery(
-    GET_FRIEND,
-    {}
+  const [input, setInput] = useState("")
+  const [getFriend, { loading, called, error, data }] = useLazyQuery(
+    GET_FRIEND_BY_EMAIL,
+    { fetchPolicy: "cache-and-network" }
   );
 
   const fetchFriend = () => {
-    alert(`Find friend with id: ${id}`)
+    getFriend({ variables: { input } })
   }
 
   return (
     <div>
-      ID:<input type="txt" value={id} onChange={e => {
-        setId(e.target.value)
+      Email:<input type="txt" value={input} onChange={e => {
+        setInput(e.target.value)
       }} />
       &nbsp; <button onClick={fetchFriend}>Find Friend</button>
       <br />
       <br />
-
-      <h2>Fetch a friend using the provided id</h2>
+      {called && loading && <p>loading....</p>}
+      {data && <p>{data.getFriendByEmail.firstName}</p>}
+      <h2>Fetch a friend using the provided Email</h2>
 
     </div>)
 }
